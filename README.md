@@ -29,3 +29,8 @@ pnpm dev
 # 프로덕션 빌드
 pnpm build
 ```
+
+## 참고 문서
+
+- [IndexedDB 정리](./docs/IndexedDB.md)
+  EOF
