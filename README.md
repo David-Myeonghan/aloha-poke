@@ -1,24 +1,31 @@
-# Recently Viewed Pokemon
+# Aloha Poke
 
-## IndexedDB
+포켓몬 도감 웹 앱 - 최근 본 포켓몬을 IndexedDB에 저장하여 오프라인에서도 확인 가능
 
-**객체 저장소(Object Store)**
+## 기술 스택
 
-- 역할: IndexedDB 에서 데이터를 저장하는 기본 단위. SQL 테이블과 유사.
-- JS 객체 저장. key-value 쌍으로 구성.
-- 생성시 고유 키 경로(key path) 지정 가능. 키 경로는 각 객체를 고유하게 식별하는 데 사용.
-  <br />
+- React 18 + TypeScript
+- Vite + pnpm
+- React Query (서버 상태 관리)
+- React Router v6
+- IndexedDB (브라우저에 데이터 저장)
+- SCSS Modules
 
-**Index**
+## 주요 기능
 
-- 역할: 객체 저장소에 저장된 데이터를 빠르게 검색할 수 있도록 도와줌.
-- 객체 저장소의 특정 속성을 기준으로 생성, 검색을 최적화하기 위해 사용.
-- DB 에서 그 인덱스.
-  <br />
+- 포켓몬 목록 조회 및 검색
+- 포켓몬 상세 정보 (스탯, 타입 등)
+- 최근 본 포켓몬 로컬 저장 (IndexedDB)
 
-**이벤트 발생 순서**
+## 실행 방법
 
-1. 'onupgradeneeded' - 데이터베이스 생성 또는 버전 업그레이드 시
-2. 'onsuccess' - 데이터베이스 연결 성공 시
-3. 'onerror' - 데이터베이스 연결 실패 또는 오류 발생 시
-4. 'oncomplete' - 트랜잭션 완료 시
+```bash
+# 의존성 설치
+pnpm install
+
+# 개발 서버 실행
+pnpm dev
+
+# 프로덕션 빌드
+pnpm build
+```
