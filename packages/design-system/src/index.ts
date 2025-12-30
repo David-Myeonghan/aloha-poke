@@ -1,12 +1,22 @@
 // Components
-export { Button } from "./components/Button";
-export type { ButtonProps } from "./components/Button";
+export {
+  Button,
+  Typography,
+  Loading,
+  LazyLoadImage,
+} from "./components";
 
-export { Typography } from "./components/Typography";
-export type { TypographyProps } from "./components/Typography";
+export type {
+  ButtonProps,
+  ButtonSize,
+  ButtonColor,
+  TypographyProps,
+  TypographySize,
+  LoadingProps,
+  LoadingSize,
+  LazyLoadImageProps,
+} from "./components";
 
-export { Loading } from "./components/Loading";
-export type { LoadingProps } from "./components/Loading";
-
-export { LazyLoadImage } from "./components/LazyLoadImage";
-export type { LazyLoadImageProps } from "./components/LazyLoadImage";
+// Tokens
+export { colors, typography } from "./tokens";
+export type { Colors, Typography as TypographyTokens, TypographySize as TypographySizeToken } from "./tokens";
