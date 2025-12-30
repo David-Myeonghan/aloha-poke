@@ -1,0 +1,49 @@
+// Typography sizes
+$text-t1: 32px;
+$text-t2: 24px;
+$text-t3: 18px;
+$text-t4: 16px;
+
+// Typography mixins
+@mixin t1 {
+  font-size: $text-t1;
+  line-height: 44px;
+  font-weight: 700;
+}
+
+@mixin t2 {
+  font-size: $text-t2;
+  line-height: 34px;
+  font-weight: 700;
+}
+
+@mixin t3 {
+  font-size: $text-t3;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+@mixin t4 {
+  font-size: $text-t4;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+// CSS Custom Properties
+:root {
+  --typography-t1-font-size: 32px;
+  --typography-t1-line-height: 44px;
+  --typography-t1-font-weight: 700;
+
+  --typography-t2-font-size: 24px;
+  --typography-t2-line-height: 34px;
+  --typography-t2-font-weight: 700;
+
+  --typography-t3-font-size: 18px;
+  --typography-t3-line-height: 28px;
+  --typography-t3-font-weight: 600;
+
+  --typography-t4-font-size: 16px;
+  --typography-t4-line-height: 24px;
+  --typography-t4-font-weight: 400;
+}
