@@ -1,0 +1,25 @@
+export const colors = {
+  primary: {
+    light: "#71b3ff",
+    main: "#3196ef",
+    dark: "#0062b7",
+  },
+  error: {
+    light: "#f3869d",
+    main: "#ec3a5d",
+    dark: "#c5082f",
+  },
+  common: {
+    white: "#fff",
+    black: "#000",
+    grey: "#727274",
+  },
+  background: {
+    header: "#1f2949",
+    primary: "#5b92d3",
+    secondary: "#6e7c99",
+    border: "#98a6c0",
+  },
+} as const;
+
+export type Colors = typeof colors;
