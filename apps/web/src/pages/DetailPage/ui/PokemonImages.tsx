@@ -1,6 +1,6 @@
 import { SpritesType } from "types/pokemon";
 import classNames from "classnames/bind";
-import { LazyLoadImage } from "components";
+import { LazyLoadImage } from "@mydav/design-system";
 
 import styles from "./PokemonImages.module.scss";
 

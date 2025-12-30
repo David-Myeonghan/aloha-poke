@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { usePokemonDetail } from "hooks/usePokemonDetail";
-import { Button, Loading } from "components";
+import { Button, Loading } from "@mydav/design-system";
 import { ROUTES } from "constants/routers";
 import { withAsyncBoundary, withAddRecentPokemon } from "utils/HOC";
 import { ErrorPage } from "pages/ErrorPage";

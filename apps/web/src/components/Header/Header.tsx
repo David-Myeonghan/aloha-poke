@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Outlet } from "react-router-dom";
 import classNames from "classnames/bind";
-import { Button } from "components";
+import { Button } from "@mydav/design-system";
 
 import styles from "./Header.module.scss";
 import RecentView from "./RecentView";

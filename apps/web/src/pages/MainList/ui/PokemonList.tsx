@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import { ROUTES } from "constants/routers";
-import { LazyLoadImage, Typography } from "components";
+import { LazyLoadImage, Typography } from "@mydav/design-system";
 import { pokemonType } from "types/pokemon";
 
 import styles from "./PokemonList.module.scss";

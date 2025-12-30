@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { Typography } from "components";
+import { Typography } from "@mydav/design-system";
 import { StatsType } from "types/pokemon";
 
 import styles from "./PokemonStats.module.scss";

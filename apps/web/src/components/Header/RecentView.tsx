@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
-import { Typography } from "components";
+import { Typography } from "@mydav/design-system";
 import useIndexChange from "hooks/useIndexChange";
 import { useRecentPokemonList } from "hooks/useRecentPokemonList";
 

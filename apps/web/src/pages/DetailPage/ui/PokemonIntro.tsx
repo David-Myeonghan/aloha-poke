@@ -1,4 +1,4 @@
-import { Typography } from "components";
+import { Typography } from "@mydav/design-system";
 import classNames from "classnames/bind";
 import { PokemonDetailResponseType } from "types/pokemon";
 
