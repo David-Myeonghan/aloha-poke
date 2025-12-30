@@ -1,6 +1,20 @@
 {
   "name": "@mydav/design-system",
-  "version": "0.1.0",
+  "version": "0.1.0-canary.0",
+  "description": "React component design system with Button, Typography, Loading, and LazyLoadImage components",
+  "keywords": [
+    "react",
+    "design-system",
+    "components",
+    "ui"
+  ],
+  "license": "MIT",
+  "author": "mydav-myeonghan-ryu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mydav/alohapoke.git",
+    "directory": "packages/design-system"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
