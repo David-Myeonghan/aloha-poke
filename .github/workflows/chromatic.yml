@@ -36,8 +36,32 @@ jobs:
         run: pnpm --filter @mydav/design-system build
 
       - name: Deploy to Chromatic
+        id: chromatic
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: packages/design-system
           buildScriptName: build-storybook
+
+      - name: Comment PR with Chromatic URLs
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const storybookUrl = '${{ steps.chromatic.outputs.storybookUrl }}';
+            const buildUrl = '${{ steps.chromatic.outputs.buildUrl }}';
+
+            const body = `## 🎨 Chromatic 배포 완료
+
+            | 링크 | URL |
+            |------|-----|
+            | 📚 Storybook | ${storybookUrl} |
+            | 🔍 Chromatic Build | ${buildUrl} |
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
