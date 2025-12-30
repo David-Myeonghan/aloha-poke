@@ -1,64 +1,14 @@
 {
-  "name": "alohapoke",
-  "version": "0.1.0",
+  "name": "alohapoke-monorepo",
   "private": true,
-  "dependencies": {
-    "@tanstack/react-query": "^5.40.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.97",
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
-    "classnames": "^2.5.1",
-    "ky": "^1.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.1",
-    "sass": "^1.77.4",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "prepare": "husky",
-    "prettier": "prettier . --write"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "lint-staged": {
-    "**/tsx,ts": "eslint --fix",
-    "**/*": "prettier --write --ignore-unknown"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "storybook": "turbo storybook"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.35.6",
-    "@vitejs/plugin-react": "^5.1.2",
-    "eslint-config-prettier": "^9.1.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.5",
-    "prettier": "3.2.5",
-    "sass-embedded": "^1.97.1",
-    "vite": "^7.3.0",
-    "vite-tsconfig-paths": "^6.0.3"
+    "turbo": "^2.3.0"
   },
-  "packageManager": "pnpm@10.26.2+sha512.0e308ff2005fc7410366f154f625f6631ab2b16b1d2e70238444dd6ae9d630a8482d92a451144debc492416896ed16f7b114a86ec68b8404b2443869e68ffda6"
+  "packageManager": "pnpm@10.26.2"
 }
