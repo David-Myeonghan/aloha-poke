@@ -90,33 +90,18 @@ pnpm --filter @alohapoke/web build
 
 ### npm 배포 (@mydav/design-system)
 
-`pnpm version`은 다음을 자동 수행합니다:
-
-1. `package.json`의 `version` 필드 업데이트
-2. git commit 생성
-3. git tag 생성 (v0.1.1)
+[release-it](https://github.com/release-it/release-it)을 사용하여 배포합니다.
 
 ```bash
 cd packages/design-system
 
-# Canary 배포 (테스트용)
-pnpm version prerelease --preid=canary -m "release: @mydav/design-system v%s"
-pnpm publish --tag canary
-
-# Patch 배포 (버그 수정: 0.1.0 → 0.1.1)
-pnpm version patch -m "release: @mydav/design-system v%s"
-pnpm publish
-
-# Minor 배포 (기능 추가: 0.1.0 → 0.2.0)
-pnpm version minor -m "release: @mydav/design-system v%s"
-pnpm publish
-
-# Major 배포 (Breaking changes: 0.1.0 → 1.0.0)
-pnpm version major -m "release: @mydav/design-system v%s"
-pnpm publish
+pnpm release         # 인터랙티브 (버전 선택)
+pnpm release:patch   # 버그 수정: 0.1.0 → 0.1.1
+pnpm release:minor   # 기능 추가: 0.1.0 → 0.2.0
+pnpm release:major   # Breaking changes: 0.1.0 → 1.0.0
 ```
 
-> `-m` 옵션의 `%s`는 버전 번호로 대체됩니다.
+자세한 내용은 [Release Guide](./docs/RELEASE_GUIDE.md) 참고
 
 ## CI/CD (GitHub Actions)
 
@@ -211,6 +196,7 @@ GitHub 이슈 번호를 입력받아 적절한 브랜치를 생성하고 체크�
 
 - [IndexedDB 정리](./docs/IndexedDB.md) - 로컬 저장소 구현
 - [디자인 시스템 분리 계획](./docs/DESIGN_SYSTEM_PLAN.md) - 모노레포 분리 과정
+- [Release Guide](./docs/RELEASE_GUIDE.md) - npm 배포 가이드 (release-it vs pnpm version)
 
 ### 디자인 시스템
 
