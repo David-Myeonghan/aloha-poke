@@ -31,6 +31,27 @@ pnpm release:major   # Breaking changes: 0.1.0 → 1.0.0
 
 # 테스트 (실제 배포 없이 시뮬레이션)
 pnpm release --dry-run
+
+# Canary 배포 (테스트용 프리릴리스)
+pnpm release --preRelease=canary
+```
+
+### Canary 배포
+
+정식 릴리스 전 테스트용 프리릴리스 버전입니다.
+
+```bash
+# 0.1.0 → 0.1.1-canary.0
+# 0.1.1-canary.0 → 0.1.1-canary.1
+pnpm release --preRelease=canary
+```
+
+- npm에 `canary` 태그로 배포됩니다
+- 기본 `npm install`로는 설치되지 않습니다
+- 명시적으로 태그를 지정해야 설치됩니다:
+
+```bash
+npm install @mydav/design-system@canary
 ```
 
 ### 자동 수행 작업
