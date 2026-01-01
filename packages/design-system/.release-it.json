@@ -1,0 +1,42 @@
+{
+  "$schema": "https://unpkg.com/release-it/schema/release-it.json",
+  "git": {
+    "commitMessage": "release: @mydav/design-system v${version}",
+    "tagName": "@mydav/design-system@${version}",
+    "tagAnnotation": "Release @mydav/design-system v${version}",
+    "requireBranch": "main",
+    "requireCleanWorkingDir": true,
+    "push": true
+  },
+  "github": {
+    "release": true,
+    "releaseName": "@mydav/design-system v${version}"
+  },
+  "npm": {
+    "publish": true
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          { "type": "feat", "section": "Features" },
+          { "type": "fix", "section": "Bug Fixes" },
+          { "type": "docs", "section": "Documentation" },
+          { "type": "style", "section": "Styles" },
+          { "type": "refactor", "section": "Code Refactoring" },
+          { "type": "perf", "section": "Performance Improvements" },
+          { "type": "test", "section": "Tests" },
+          { "type": "build", "section": "Build System" },
+          { "type": "ci", "section": "CI" },
+          { "type": "chore", "hidden": true }
+        ]
+      },
+      "infile": "CHANGELOG.md",
+      "header": "# Changelog\n\nAll notable changes to @mydav/design-system will be documented in this file.\n"
+    }
+  },
+  "hooks": {
+    "before:init": ["pnpm build"]
+  }
+}
