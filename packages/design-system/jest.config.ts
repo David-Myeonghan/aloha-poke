@@ -6,7 +6,6 @@ const config: Config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '\\.module\\.(css|scss)$': 'identity-obj-proxy',
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
   testMatch: ['**/*.test.ts', '**/*.test.tsx'],
