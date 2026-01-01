@@ -1,119 +1,49 @@
 ---
 name: pr-review
-description: PR 생성, 리뷰, 코멘트 작성을 자동화합니다. "PR 만들어줘", "PR 리뷰해줘", "/pr-review" 명령으로 실행합니다.
+description: PR 생성, 리뷰, 코멘트 작성을 자동화합니다. "PR 만들어줘", "PR 리뷰해줘", "코드 리뷰해줘" 등의 자연어로 실행합니다.
 ---
 
 # PR Review Skill
 
-현재 브랜치에서 PR을 생성하고, 변경사항을 리뷰한 후 코멘트를 작성합니다.
+현재 브랜치에서 PR을 생성하고, 코드 리뷰 후 코멘트를 작성합니다.
 
-## 사용법
+## 트리거
 
-```
-/pr-review
-```
+자연어로 호출:
+- "PR 만들어줘"
+- "PR 리뷰해줘"
+- "코드 리뷰해줘"
+- "현재 브랜치로 PR 생성하고 리뷰해줘"
 
-또는 자연어로:
-- "PR 만들고 리뷰해줘"
-- "현재 브랜치로 PR 생성하고 코멘트 달아줘"
+---
 
-## 워크플로우
+## 리뷰 기준
 
-### 1. PR 생성
+상세 리뷰 영역, 피드백 분류, 코멘트 형식은 [pr-review-criteria.md](../../shared/pr-review-criteria.md) 참고
 
-```bash
-# 현재 브랜치 확인
-git branch --show-current
+---
 
-# 리모트에 푸시
-git push -u origin <branch-name>
+## 실행 단계
 
-# PR 생성
-gh pr create --title "<제목>" --body "<본문>"
-```
-
-PR 본문 템플릿:
-```markdown
-## Summary
-- 변경사항 요약 (bullet points)
-
-## Changes
-- 주요 변경 내용
-
-## Test plan
-- [ ] 테스트 항목
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-```
-
-### 2. PR 리뷰
+### Step 1: PR 정보 수집
 
 ```bash
-# PR 정보 확인
-gh pr view <pr-number> --json title,body,additions,deletions,changedFiles
+# PR 메타데이터
+gh pr view <pr-number> --json title,body,additions,deletions,changedFiles,commits
 
 # 변경 파일 목록
 gh pr diff <pr-number> --name-only
 
-# 상세 diff 확인
+# 주요 파일 diff 확인 (필요시)
 gh pr diff <pr-number>
 ```
 
-리뷰 시 확인 사항:
-- 코드 품질 및 가독성
-- 보안 취약점
-- 테스트 커버리지
-- 문서화 여부
-- 성능 영향
+### Step 2: 코드 분석
 
-### 3. 리뷰 코멘트 작성
+변경된 파일을 읽고 6가지 리뷰 영역에 따라 분석합니다.
+
+### Step 3: 리뷰 코멘트 작성
 
 ```bash
 gh pr comment <pr-number> --body "<리뷰 내용>"
-```
-
-코멘트 템플릿:
-```markdown
-## 🔍 PR Review
-
-### 개요
-[변경사항 요약]
-
-| 항목 | 내용 |
-|------|------|
-| 변경 파일 | X개 |
-| 추가 라인 | +X |
-| 삭제 라인 | -X |
-
----
-
-### ✅ 잘된 점
-- [긍정적인 피드백]
-
-### 📝 확인 사항
-- [x] 체크리스트
-
-### 💡 개선 제안 (Optional)
-- [선택적 개선사항]
-
----
-
-**LGTM! 🚀** / **수정 필요**
-```
-
-## 전체 명령어 요약
-
-```bash
-# 1. PR 생성
-git push -u origin $(git branch --show-current)
-gh pr create --title "feat: ..." --body "..."
-
-# 2. PR 정보 조회
-gh pr view <pr-number> --json title,body,additions,deletions,changedFiles
-
-# 3. 리뷰 코멘트
-gh pr comment <pr-number> --body "..."
-
-# 4. PR 머지
-gh pr merge <pr-number> --squash --delete-branch
 ```

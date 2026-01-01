@@ -11,7 +11,10 @@ alohapoke/
 ├── packages/
 │   └── design-system/          # @mydav/design-system (npm 배포)
 ├── docs/                       # 프로젝트 문서
-├── .claude/                    # Claude Code 커맨드/스킬
+├── .claude/
+│   ├── commands/               # 슬래시 커맨드 (/pr-review, /issue-branch)
+│   ├── skills/                 # 자연어 스킬
+│   └── shared/                 # 공통 리소스 (리뷰 기준 등)
 ├── .github/                    # GitHub Actions
 ├── turbo.json                  # Turborepo 설정
 └── pnpm-workspace.yaml         # pnpm 워크스페이스
@@ -85,10 +88,40 @@ pnpm --filter @mydav/design-system build
 pnpm --filter @alohapoke/web build
 ```
 
+### npm 배포 (@mydav/design-system)
+
+`pnpm version`은 다음을 자동 수행합니다:
+
+1. `package.json`의 `version` 필드 업데이트
+2. git commit 생성
+3. git tag 생성 (v0.1.1)
+
+```bash
+cd packages/design-system
+
+# Canary 배포 (테스트용)
+pnpm version prerelease --preid=canary -m "release: @mydav/design-system v%s"
+pnpm publish --tag canary
+
+# Patch 배포 (버그 수정: 0.1.0 → 0.1.1)
+pnpm version patch -m "release: @mydav/design-system v%s"
+pnpm publish
+
+# Minor 배포 (기능 추가: 0.1.0 → 0.2.0)
+pnpm version minor -m "release: @mydav/design-system v%s"
+pnpm publish
+
+# Major 배포 (Breaking changes: 0.1.0 → 1.0.0)
+pnpm version major -m "release: @mydav/design-system v%s"
+pnpm publish
+```
+
+> `-m` 옵션의 `%s`는 버전 번호로 대체됩니다.
+
 ## CI/CD (GitHub Actions)
 
-| Workflow | 트리거 | 설명 |
-|----------|--------|------|
+| Workflow      | 트리거                              | 설명                                |
+| ------------- | ----------------------------------- | ----------------------------------- |
 | **Chromatic** | `packages/design-system/**` 변경 시 | Storybook 배포 + 시각적 회귀 테스트 |
 
 ### Chromatic Workflow
@@ -97,14 +130,8 @@ pnpm --filter @alohapoke/web build
 - **Pull Request**: 시각적 변경 감지 + PR 코멘트로 배포 URL 제공
 
 필요한 Secrets:
+
 - `CHROMATIC_PROJECT_TOKEN`: Chromatic 프로젝트 토큰
-
-## Claude Code 커맨드
-
-| 커맨드                   | 설명                             |
-| ------------------------ | -------------------------------- |
-| `/issue-branch <number>` | 이슈에서 브랜치 생성 및 체크아웃 |
-| `/pr-review [number]`    | PR 생성 및 코드 리뷰             |
 
 ## 디자인 시스템 사용
 
@@ -124,13 +151,70 @@ import "@mydav/design-system/styles";
 
 자세한 내용은 [design-system README](./packages/design-system/README.md) 참고
 
+## Claude Code 커맨드 & 스킬
+
+이 프로젝트는 [Claude Code](https://platform.claude.com/docs/ko/agents-and-tools/agent-skills/overview) CLI 도구와 함께 사용할 수 있는 커스텀 커맨드와 스킬을 제공합니다.
+
+### Commands vs Skills
+
+| 구분         | 위치                | 호출 방식                   | 용도                        |
+| ------------ | ------------------- | --------------------------- | --------------------------- |
+| **Commands** | `.claude/commands/` | `/command` 형태로 직접 호출 | 정해진 워크플로우 순차 실행 |
+| **Skills**   | `.claude/skills/`   | 자연어로 자동 인식          | 유연한 컨텍스트 기반 실행   |
+
+`pr-review`는 두 가지 형태로 제공됩니다 (동일한 기능, 호출 방식만 다름):
+
+- **Command**: `/pr-review` 명령어로 직접 호출
+- **Skill**: "PR 만들어줘", "리뷰해줘" 같은 자연어로 자동 인식
+
+### 커맨드 목록
+
+| 커맨드                   | 설명                             |
+| ------------------------ | -------------------------------- |
+| `/issue-branch <number>` | 이슈에서 브랜치 생성 및 체크아웃 |
+| `/pr-review [number]`    | PR 생성 및 코드 리뷰             |
+
+### /issue-branch
+
+GitHub 이슈 번호를 입력받아 적절한 브랜치를 생성하고 체크아웃합니다.
+
+```bash
+/issue-branch 3
+```
+
+- 이슈 라벨에 따라 브랜치 접두사 자동 결정 (`fix/`, `feat/`, `docs/`)
+- main 브랜치 최신화 후 새 브랜치 생성
+- 브랜치명: `<prefix>/issue-<number>-<keywords>`
+
+### /pr-review
+
+현재 브랜치에서 PR을 생성하거나 기존 PR을 리뷰합니다.
+
+```bash
+/pr-review      # 새 PR 생성 + 리뷰
+/pr-review 5    # 기존 PR #5 리뷰
+```
+
+6가지 영역(보안, 성능, 코드 품질, 아키텍처, 에러 처리, 테스트/문서화)에 대해 코드 리뷰를 수행하고, 3단계 피드백(🔴 Critical, 🟡 Suggestion, ✅ Good)으로 분류합니다.
+
 ## 문서
 
-- [IndexedDB 정리](./docs/IndexedDB.md)
-- [디자인 시스템 컴포넌트](./packages/design-system/docs/components.md)
-- [디자인 토큰](./packages/design-system/docs/design-tokens.md)
-- [FAQ](./packages/design-system/docs/faq.md)
+### 프로젝트 기획/설계
 
-## 라이선스
+- [기획 문서](./docs/PLANNING.md) - 프로젝트 개요 및 기획
+- [화면 설계](./docs/SCREEN_SPEC.md) - 화면별 UI/UX 명세
+- [API 명세](./docs/API_SPEC.md) - PokeAPI 사용 명세
+- [컴포넌트 설계](./docs/COMPONENT_SPEC.md) - 컴포넌트 구조 설계
+- [상태 관리](./docs/STATE_MANAGEMENT.md) - 상태 관리 전략
 
-MIT
+### 기술 문서
+
+- [IndexedDB 정리](./docs/IndexedDB.md) - 로컬 저장소 구현
+- [디자인 시스템 분리 계획](./docs/DESIGN_SYSTEM_PLAN.md) - 모노레포 분리 과정
+
+### 디자인 시스템
+
+- [컴포넌트 API](./packages/design-system/docs/components.md) - Button, Typography, Loading, LazyLoadImage
+- [디자인 토큰](./packages/design-system/docs/design-tokens.md) - Colors, Typography 토큰
+- [모듈 해석](./packages/design-system/docs/module-resolution.md) - 빌드 설정
+- [FAQ](./packages/design-system/docs/faq.md) - 자주 묻는 질문
