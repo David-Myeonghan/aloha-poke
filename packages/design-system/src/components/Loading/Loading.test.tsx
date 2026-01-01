@@ -2,13 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { Loading } from './Loading';
 
 describe('Loading', () => {
-  it('renders correctly', () => {
-    render(<Loading data-testid="loading" />);
-    expect(screen.getByTestId('loading')).toBeInTheDocument();
+  it('renders with accessible role', () => {
+    render(<Loading />);
+    const loading = screen.getByRole('status');
+    expect(loading).toBeInTheDocument();
+    expect(loading).toHaveAttribute('aria-busy', 'true');
   });
 
   it('passes through HTML attributes', () => {
-    render(<Loading data-testid="loading" aria-label="Loading content" />);
-    expect(screen.getByTestId('loading')).toHaveAttribute('aria-label', 'Loading content');
+    render(<Loading aria-label="Loading content" />);
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'Loading content');
   });
 });
