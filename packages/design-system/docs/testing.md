@@ -29,7 +29,7 @@ it('calls onClick when clicked', async () => {
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
 
-// 3. 상태 변화 (disabled, loading 등)
+// 3. 상태 변화 (disabled 등)
 it('is disabled when disabled prop is true', () => {
   render(<Button disabled>Disabled</Button>);
   expect(screen.getByRole('button')).toBeDisabled();
