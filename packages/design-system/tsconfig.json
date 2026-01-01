@@ -20,8 +20,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["jest"]
   },
-  "include": ["src", "src/types"],
+  "include": ["src", "src/types", "jest.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

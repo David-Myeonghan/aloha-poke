@@ -18,5 +18,5 @@ export const Loading = ({
 }: LoadingProps) => {
   const loadingClassName = cx(size, "spinner", className);
 
-  return <div className={loadingClassName} {...rest} />;
+  return <div className={loadingClassName} role="status" aria-busy="true" {...rest} />;
 };
