@@ -13,6 +13,8 @@ const config: Config = {
     'src/**/*.{ts,tsx}',
     '!src/**/*.stories.tsx',
     '!src/**/index.ts',
+    '!src/tokens/**',
+    '!src/types/**',
   ],
 };
 

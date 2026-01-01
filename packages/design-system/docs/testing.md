@@ -137,6 +137,30 @@ it('calls onClick when clicked', async () => {
 });
 ```
 
+## 커버리지 제외 항목
+
+`jest.config.ts`에서 다음 파일들은 커버리지에서 제외됩니다:
+
+| 제외 패턴 | 이유 |
+|-----------|------|
+| `*.stories.tsx` | Storybook 문서화 파일, 테스트 대상 아님 |
+| `**/index.ts` | re-export만 하는 barrel 파일 |
+| `src/tokens/**` | 순수 상수 객체, 로직 없음 |
+| `src/types/**` | 타입 정의 파일 |
+
+**tokens 폴더 제외 이유:**
+- `colors.ts`, `typography.ts`는 순수한 상수 객체
+- 함수나 조건문이 없어 테스트할 동작이 없음
+- 값 자체를 테스트하면 소스 코드를 복사하는 것과 같음
+
+```typescript
+// src/tokens/colors.ts - 테스트할 로직 없음
+export const colors = {
+  primary: { main: "#3196ef", ... },
+  error: { main: "#ec3a5d", ... },
+} as const;
+```
+
 ## 파일 구조
 
 ```
@@ -145,6 +169,8 @@ packages/design-system/
 ├── jest.setup.ts           # 테스트 셋업 (@testing-library/jest-dom)
 ├── jest.d.ts               # Jest 타입 선언
 └── src/
+    ├── tokens/             # 커버리지 제외 (순수 상수)
+    ├── types/              # 커버리지 제외 (타입 정의)
     └── components/
         ├── Button/
         │   ├── Button.tsx
