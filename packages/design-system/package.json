@@ -1,6 +1,6 @@
 {
   "name": "@mydav/design-system",
-  "version": "0.1.0-canary.0",
+  "version": "0.1.0-canary.1",
   "description": "React component design system with Button, Typography, Loading, and LazyLoadImage components",
   "keywords": [
     "react",
