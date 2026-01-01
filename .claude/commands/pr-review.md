@@ -1,61 +1,157 @@
 # PR Review Command
 
-현재 브랜치에서 PR을 생성하고, 리뷰 후 코멘트를 작성합니다.
+현재 브랜치에서 PR을 생성하고, 코드 리뷰 후 코멘트를 작성합니다.
+
+## 사용법
+
+```
+/pr-review          # 새 PR 생성 + 리뷰
+/pr-review <number> # 기존 PR 리뷰
+```
+
+---
+
+## 리뷰 영역 (6가지)
+
+### 1. 보안
+- [ ] 입력 검증이 적절한가?
+- [ ] 인증/인가 처리가 올바른가?
+- [ ] 하드코딩된 시크릿/API 키가 없는가?
+- [ ] SQL 인젝션, XSS 등 주입 취약점이 없는가?
+- [ ] 민감한 데이터 노출 위험이 없는가?
+
+### 2. 성능
+- [ ] 알고리즘 복잡도가 적절한가?
+- [ ] 불필요한 리렌더링이 없는가? (React)
+- [ ] N+1 쿼리 문제가 없는가?
+- [ ] 메모리 누수 가능성이 없는가?
+- [ ] 쿼리/API 호출이 최적화되었는가?
+
+### 3. 코드 품질
+- [ ] 함수/변수명이 명확한가?
+- [ ] 함수 크기와 책임이 적절한가?
+- [ ] 중복 코드가 없는가?
+- [ ] 가독성이 좋은가?
+- [ ] 불필요한 코드나 주석이 없는가?
+
+### 4. 아키텍처
+- [ ] 설계 패턴이 적절히 사용되었는가?
+- [ ] 관심사 분리가 잘 되어있는가?
+- [ ] 의존성 관리가 올바른가?
+- [ ] Breaking changes가 있는가?
+- [ ] 타입 안정성이 확보되었는가? (TypeScript)
+
+### 5. 에러 처리
+- [ ] 예외가 적절히 처리되는가?
+- [ ] 에러 메시지가 사용자 친화적인가?
+- [ ] 디버깅에 충분한 로그가 있는가?
+- [ ] 리소스 정리가 보장되는가? (finally, cleanup)
+- [ ] 실패 시 시스템이 안전한 상태를 유지하는가?
+
+### 6. 테스트/문서화
+- [ ] 테스트가 추가/수정되었는가?
+- [ ] 엣지 케이스가 고려되었는가?
+- [ ] 복잡한 로직에 주석이 있는가?
+- [ ] API 변경 시 문서가 업데이트되었는가?
+
+---
+
+## 피드백 분류
+
+| 레벨 | 설명 | 액션 |
+|------|------|------|
+| 🔴 **Critical** | 머지 전 필수 수정 (보안, 버그) | 반드시 수정 |
+| 🟡 **Suggestion** | 검토할 개선안 | 수정 권장 |
+| ✅ **Good** | 잘 구현된 부분 | 칭찬/참고 |
+
+### 피드백 작성 시 포함할 내용
+
+각 피드백에는 다음을 포함합니다:
+- **위치**: 특정 파일:라인 참조
+- **설명**: 문제 또는 좋은 점 설명
+- **예시**: 수정 전/후 코드 (해당시)
+- **근거**: 변경이 필요한 이유
+
+---
 
 ## 실행 단계
 
-### 1. PR 생성
+### Step 1: PR 정보 수집
 
 ```bash
-# 브랜치 푸시
-git push -u origin $(git branch --show-current)
-
-# PR 생성
-gh pr create --title "<제목>" --body "## Summary
-- 변경사항 요약
-
-## Changes
-- 주요 변경 내용
-
-## Test plan
-- [ ] 테스트 항목
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)"
-```
-
-### 2. PR 리뷰
-
-```bash
-# PR 정보 확인
-gh pr view <pr-number> --json title,body,additions,deletions,changedFiles
+# PR 메타데이터
+gh pr view $ARGUMENTS --json title,body,additions,deletions,changedFiles,commits
 
 # 변경 파일 목록
-gh pr diff <pr-number> --name-only
+gh pr diff $ARGUMENTS --name-only
+
+# 주요 파일 diff 확인 (필요시)
+gh pr diff $ARGUMENTS
 ```
 
-### 3. 리뷰 코멘트 작성
+### Step 2: 코드 분석
+
+변경된 파일을 읽고 위 6가지 리뷰 영역에 따라 분석합니다.
+
+### Step 3: 리뷰 코멘트 작성
 
 ```bash
-gh pr comment <pr-number> --body "## 🔍 PR Review
+gh pr comment $ARGUMENTS --body "<리뷰 내용>"
+```
+
+---
+
+## 코멘트 형식
+
+```markdown
+## 🔍 PR Review
 
 ### 개요
-[변경사항 요약]
+[PR 목적과 변경사항 한 줄 요약]
 
 | 항목 | 내용 |
 |------|------|
 | 변경 파일 | X개 |
-| 추가 라인 | +X |
-| 삭제 라인 | -X |
+| 추가 | +X lines |
+| 삭제 | -X lines |
+| 커밋 | X개 |
+
+---
 
 ### ✅ 잘된 점
-- [피드백]
+- [파일:라인] 구체적인 긍정 피드백
+- [파일:라인] 좋은 패턴이나 구현
 
-### 📝 확인 사항
-- [x] 체크리스트
+### 🔴 수정 필요
+- [ ] [파일:라인] 문제 설명 + 수정 방법
 
-**LGTM! 🚀**"
+### 🟡 제안
+- [ ] [파일:라인] 개선안 + 근거
+
+---
+
+### 리뷰 체크리스트
+- [x] 보안
+- [x] 성능
+- [x] 코드 품질
+- [x] 아키텍처
+- [x] 에러 처리
+- [ ] 테스트/문서화
+
+---
+
+**결론**: LGTM 🚀 / 수정 필요 🔧
 ```
+
+---
 
 ## 인자
 
-- `$ARGUMENTS`: PR 번호 (선택사항). 없으면 새 PR 생성
+- `$ARGUMENTS`: PR 번호. 없으면 현재 브랜치에서 새 PR 생성
+
+---
+
+## 참고
+
+- [GitHub Copilot Code Review Prompt](https://docs.github.com/en/copilot/tutorials/customization-library/prompt-files/review-code)
+- [Nerdify - 8 Pillars Code Review Checklist](https://getnerdify.com/blog/code-review-checklist/)
