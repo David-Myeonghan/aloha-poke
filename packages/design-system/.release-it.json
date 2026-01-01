@@ -33,7 +33,10 @@
         ]
       },
       "infile": "CHANGELOG.md",
-      "header": "# Changelog\n\nAll notable changes to @mydav/design-system will be documented in this file.\n"
+      "header": "# Changelog\n\nAll notable changes to @mydav/design-system will be documented in this file.\n",
+      "gitRawCommitsOpts": {
+        "path": "packages/design-system"
+      }
     }
   },
   "hooks": {
