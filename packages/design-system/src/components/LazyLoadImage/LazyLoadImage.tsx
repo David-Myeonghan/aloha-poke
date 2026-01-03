@@ -10,11 +10,13 @@ export interface LazyLoadImageProps
   extends Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> {
   imageSource: string;
   alt?: string;
+  fallbackSrc?: string;
 }
 
 export const LazyLoadImage = ({
   imageSource,
   alt,
+  fallbackSrc,
   className,
   ...rest
 }: LazyLoadImageProps) => {
@@ -34,16 +36,30 @@ export const LazyLoadImage = ({
       }
     };
 
+    const handleError = () => {
+      if (loadingElement) {
+        loadingElement.style.display = "none";
+      }
+      if (imageElement) {
+        imageElement.style.visibility = "visible";
+        if (fallbackSrc) {
+          imageElement.src = fallbackSrc;
+        }
+      }
+    };
+
     if (imageElement) {
       imageElement.onload = handleLoad;
+      imageElement.onerror = handleError;
     }
 
     return () => {
       if (imageElement) {
         imageElement.onload = null;
+        imageElement.onerror = null;
       }
     };
-  }, []);
+  }, [fallbackSrc]);
 
   return (
     <>

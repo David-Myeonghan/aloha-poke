@@ -26,4 +26,15 @@ describe('LazyLoadImage', () => {
     expect(img).toHaveAttribute('width', '100');
     expect(img).toHaveAttribute('height', '100');
   });
+
+  it('uses fallbackSrc when image fails to load', () => {
+    const fallbackUrl = 'https://example.com/fallback.png';
+    render(<LazyLoadImage imageSource={testImageUrl} alt={testAlt} fallbackSrc={fallbackUrl} />);
+    const img = screen.getByRole('img');
+
+    // Trigger error event
+    img.dispatchEvent(new Event('error'));
+
+    expect(img).toHaveAttribute('src', fallbackUrl);
+  });
 });
