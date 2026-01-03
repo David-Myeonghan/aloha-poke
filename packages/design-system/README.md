@@ -81,6 +81,7 @@ function App() {
 <LazyLoadImage
   imageSource="https://example.com/image.jpg"
   alt="Description"
+  fallbackSrc="https://example.com/placeholder.jpg"
 />
 ```
 
@@ -88,6 +89,7 @@ function App() {
 |------|------|---------|-------------|
 | `imageSource` | `string` | - | Image URL (required) |
 | `alt` | `string` | `''` | Alt text |
+| `fallbackSrc` | `string` | - | Fallback image URL on error |
 
 ## Design Tokens
 

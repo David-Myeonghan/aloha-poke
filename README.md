@@ -55,6 +55,7 @@ alohapoke/
 - React 18 + Vite (라이브러리 모드)
 - Storybook (컴포넌트 문서화)
 - Chromatic (시각적 회귀 테스트)
+- Jest + React Testing Library (단위 테스트)
 - SCSS Modules + CSS 커스텀 프로퍼티
 
 ## 시작하기
@@ -152,6 +153,13 @@ import "@mydav/design-system/styles";
 - **Command**: `/pr-review` 명령어로 직접 호출
 - **Skill**: "PR 만들어줘", "리뷰해줘" 같은 자연어로 자동 인식
 
+### 스킬 목록
+
+| 스킬           | 트리거 예시                    | 설명                          |
+| -------------- | ------------------------------ | ----------------------------- |
+| **pr-review**  | "PR 만들어줘", "리뷰해줘"      | PR 생성 및 코드 리뷰          |
+| **write-test** | "테스트 작성해줘", "테스트 추가해줘" | Jest 테스트 작성 (testing.md 참조) |
+
 ### 커맨드 목록
 
 | 커맨드                   | 설명                             |
@@ -202,5 +210,6 @@ GitHub 이슈 번호를 입력받아 적절한 브랜치를 생성하고 체크�
 
 - [컴포넌트 API](./packages/design-system/docs/components.md) - Button, Typography, Loading, LazyLoadImage
 - [디자인 토큰](./packages/design-system/docs/design-tokens.md) - Colors, Typography 토큰
+- [테스트 전략](./packages/design-system/docs/testing.md) - Jest vs Chromatic 역할 분담
 - [모듈 해석](./packages/design-system/docs/module-resolution.md) - 빌드 설정
 - [FAQ](./packages/design-system/docs/faq.md) - 자주 묻는 질문
