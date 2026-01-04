@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { usePokemonList } from "hooks/usePokemonList";
+import { usePokemonList } from "queries/usePokemonList";
 import { Loading } from "@mydav/design-system";
 import { ErrorPage } from "pages/ErrorPage";
 import { withAsyncBoundary } from "utils/HOC";
