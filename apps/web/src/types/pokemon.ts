@@ -36,5 +36,8 @@ export interface pokemonType {
 }
 
 export interface PokemonListResponseType {
+  count: number;
+  next: string | null;
+  previous: string | null;
   results: pokemonType[];
 }

@@ -1,11 +1,10 @@
 import classNames from "classnames/bind";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { usePokemonDetail } from "hooks/usePokemonDetail";
-import { Button, Loading } from "@mydav/design-system";
+import { usePokemonDetail } from "queries/usePokemonDetail";
+import { Button } from "@mydav/design-system";
 import { ROUTES } from "constants/routers";
 import { withAsyncBoundary, withAddRecentPokemon } from "utils/HOC";
-import { ErrorPage } from "pages/ErrorPage";
 
 import styles from "./DetailPage.module.scss";
 import PokemonImages from "./ui/PokemonImages";
@@ -37,7 +36,4 @@ function DetailPage() {
   );
 }
 
-export default withAsyncBoundary(withAddRecentPokemon(DetailPage), {
-  pendingFallback: <Loading />,
-  rejectedFallback: <ErrorPage />,
-});
+export default withAsyncBoundary(withAddRecentPokemon(DetailPage));

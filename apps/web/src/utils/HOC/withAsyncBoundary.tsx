@@ -1,22 +1,41 @@
-import React, { ComponentProps, ComponentType, Suspense } from "react";
+import { ComponentProps, ComponentType, Suspense } from "react";
 
+import { Loading } from "@mydav/design-system";
+import { ErrorPage } from "pages/ErrorPage";
 import ErrorBoundary from "../routes/ErrorBoundary";
 
 interface AsyncBoundaryProps {
-  rejectedFallback: ComponentProps<typeof ErrorBoundary>["fallback"];
-  pendingFallback: ComponentProps<typeof Suspense>["fallback"];
+  rejectedFallback?: ComponentProps<typeof ErrorBoundary>["fallback"];
+  pendingFallback?: ComponentProps<typeof Suspense>["fallback"];
 }
-export default function withAsyncBoundary<Props = Record<string, never>>(
+
+const CenteredLoading = (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+    }}
+  >
+    <Loading />
+  </div>
+);
+
+export default function withAsyncBoundary<
+  Props extends Record<string, unknown>,
+>(
   WrappedComponent: ComponentType<Props>,
-  { pendingFallback, rejectedFallback }: AsyncBoundaryProps,
+  {
+    pendingFallback = CenteredLoading,
+    rejectedFallback = <ErrorPage />,
+  }: AsyncBoundaryProps = {},
 ) {
-  return (props: Props) => {
-    return (
-      <ErrorBoundary fallback={rejectedFallback}>
-        <Suspense fallback={pendingFallback}>
-          <WrappedComponent {...(props as any)} />
-        </Suspense>
-      </ErrorBoundary>
-    );
-  };
+  return (props: Props) => (
+    <ErrorBoundary fallback={rejectedFallback}>
+      <Suspense fallback={pendingFallback}>
+        <WrappedComponent {...props} />
+      </Suspense>
+    </ErrorBoundary>
+  );
 }

@@ -1,3 +1,8 @@
+---
+description: PR 생성 및 코드 리뷰
+argument-hint: [pr-number]
+---
+
 # PR Review Command
 
 현재 브랜치에서 PR을 생성하고, 코드 리뷰 후 코멘트를 작성합니다.
@@ -19,7 +24,38 @@
 
 ## 실행 단계
 
-### Step 1: PR 정보 수집
+### Step 1: 현재 상태 확인 (새 PR 생성 시)
+
+$ARGUMENTS가 없으면 새 PR 생성 모드:
+
+```bash
+# 현재 브랜치 및 상태 확인
+git status
+git branch --show-current
+
+# main 브랜치 대비 커밋 확인
+git log main..HEAD --oneline
+
+# 변경 사항 확인
+git diff main..HEAD --stat
+```
+
+### Step 2: 브랜치 푸시 및 PR 생성 (새 PR 생성 시)
+
+```bash
+# 리모트에 브랜치 푸시
+git push -u origin <현재-브랜치명>
+
+# PR 생성
+gh pr create --title "<PR 제목>" --body "<PR 본문>"
+```
+
+PR 본문에 포함:
+
+- 변경 사항 요약
+- 관련 이슈 (있으면 `Closes #N`)
+
+### Step 3: PR 정보 수집 (기존 PR 리뷰 시)
 
 ```bash
 # PR 메타데이터
@@ -32,11 +68,11 @@ gh pr diff $ARGUMENTS --name-only
 gh pr diff $ARGUMENTS
 ```
 
-### Step 2: 코드 분석
+### Step 4: 코드 분석
 
 변경된 파일을 읽고 6가지 리뷰 영역에 따라 분석합니다.
 
-### Step 3: 리뷰 코멘트 작성
+### Step 5: 리뷰 코멘트 작성
 
 ```bash
 gh pr comment $ARGUMENTS --body "<리뷰 내용>"

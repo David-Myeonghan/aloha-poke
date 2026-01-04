@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getPokemonDetail } from "remote/pokemon";
+import { getPokemonDetail } from "api/pokemon";
 
 export const usePokemonDetail = (idOrName: string) => {
   return useSuspenseQuery({

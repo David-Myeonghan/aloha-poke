@@ -1,9 +1,8 @@
 .error-layout {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.error-content {
-  height: 100px;
+  height: 100vh;
+  gap: 24px;
 }
