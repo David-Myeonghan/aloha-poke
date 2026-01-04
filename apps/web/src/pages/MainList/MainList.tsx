@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import classNames from "classnames/bind";
 import { usePokemonInfiniteList } from "queries/usePokemonInfiniteList";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
@@ -15,15 +15,25 @@ function MainList() {
     usePokemonInfiniteList();
 
   const allPokemon = data?.pages.flatMap((page) => page.results) ?? [];
+  const prevIntersecting = useRef(false);
 
   const { ref, isIntersecting } = useIntersectionObserver({
     enabled: hasNextPage && !isFetchingNextPage,
+    threshold: 0.1,
+    rootMargin: "100px",
   });
 
   useEffect(() => {
-    if (isIntersecting && hasNextPage && !isFetchingNextPage) {
+    // false -> true 로 변경될 때만 fetch
+    if (
+      isIntersecting &&
+      !prevIntersecting.current &&
+      hasNextPage &&
+      !isFetchingNextPage
+    ) {
       fetchNextPage();
     }
+    prevIntersecting.current = isIntersecting;
   }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (

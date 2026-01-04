@@ -298,3 +298,56 @@ sentinel이 아래로 이동, 반복
   ]
 }
 ```
+
+---
+
+## Challenge: 무한 로딩 버그
+
+### 문제
+
+`isIntersecting`이 `true`인 상태에서 데이터가 로드되면 `fetchNextPage`가 무한 반복 호출됨.
+
+```
+1. 스크롤 → sentinel이 viewport에 들어옴
+2. isIntersecting = true
+3. fetchNextPage() 호출
+4. isFetchingNextPage: false → true → false (로드 완료)
+5. useEffect 의존성 변경으로 재실행
+6. isIntersecting이 여전히 true → fetchNextPage() 다시 호출
+7. 2~6 반복 (무한 루프)
+```
+
+### 원인
+
+- `isFetchingNextPage`가 `false`로 돌아올 때 useEffect가 재실행됨
+- `isIntersecting`이 여전히 `true`이므로 조건을 만족하여 `fetchNextPage` 재호출
+- IntersectionObserver는 sentinel이 viewport를 벗어나야 `false`를 반환하지만, 스크롤 위치가 변경되지 않으면 계속 `true` 유지
+
+### 해결책
+
+`prevIntersecting` ref를 사용하여 `isIntersecting`이 `false → true`로 변경될 때만 fetch.
+
+```typescript
+const prevIntersecting = useRef(false);
+
+useEffect(() => {
+  // false -> true 로 변경될 때만 fetch
+  if (
+    isIntersecting &&
+    !prevIntersecting.current &&
+    hasNextPage &&
+    !isFetchingNextPage
+  ) {
+    fetchNextPage();
+  }
+  prevIntersecting.current = isIntersecting;
+}, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
+```
+
+### 핵심 포인트
+
+| 항목 | 설명                                                              |
+| ---- | ----------------------------------------------------------------- |
+| 문제 | `isIntersecting`이 `true` 유지 상태에서 의존성 변경으로 반복 호출 |
+| 해결 | 상태 변화(`false → true`)를 감지하여 한 번만 호출                 |
+| 패턴 | `useRef`로 이전 값 추적 → 엣지 트리거 방식                        |
