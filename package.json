@@ -7,7 +7,14 @@
     "lint": "turbo lint",
     "storybook": "turbo storybook"
   },
+  "lint-staged": {
+    "apps/web/**/*.{ts,tsx}": "pnpm --filter @alohapoke/web exec eslint --fix",
+    "packages/design-system/**/*.{ts,tsx}": "pnpm --filter @mydav/design-system exec eslint --fix",
+    "**/*.{ts,tsx,js,jsx,json,css,scss,md}": "prettier --write"
+  },
   "devDependencies": {
+    "lint-staged": "^15.5.2",
+    "prettier": "3.2.5",
     "turbo": "^2.3.0"
   },
   "packageManager": "pnpm@10.26.2"
