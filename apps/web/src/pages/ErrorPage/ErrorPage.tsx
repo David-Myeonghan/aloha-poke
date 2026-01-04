@@ -8,7 +8,7 @@ export default function ErrorPage() {
   return (
     <div className={cx("error-layout")}>
       <div className={cx("error-content")}>
-        <Typography size={"t1"}>Something's wrong!</Typography>
+        <Typography size={"t1"}>Something&apos;s wrong!</Typography>
       </div>
     </div>
   );

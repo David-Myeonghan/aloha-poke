@@ -1,5 +1,5 @@
 export const ROUTES = {
-  index: "/main-list",
+  index: "/list",
   detail: {
     root: "/detail",
   },

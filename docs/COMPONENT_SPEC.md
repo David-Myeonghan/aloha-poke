@@ -464,7 +464,7 @@ function DetailPage() {
 
   return (
     <main>
-      <Button onClick={() => navigate("/main-list")}>Back</Button>
+      <Button onClick={() => navigate("/list")}>Back</Button>
       <PokemonImages pokemon={pokemon} />
       <PokemonIntro pokemon={pokemon} />
       <PokemonStats pokemon={pokemon} />

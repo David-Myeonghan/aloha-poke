@@ -63,7 +63,7 @@
 | 너비   | auto (이미지 비율 유지)            |
 | 높이   | 40px                               |
 | 이미지 | Pokemon 공식 로고 또는 커스텀 로고 |
-| 클릭   | `/main-list`로 이동                |
+| 클릭   | `/list`로 이동                     |
 | cursor | pointer                            |
 
 #### Recent View
@@ -256,13 +256,13 @@
 
 #### Back 버튼
 
-| 속성          | 값                  |
-| ------------- | ------------------- |
-| 위치          | 좌측 상단           |
-| 크기          | medium              |
-| 색상          | primary             |
-| margin-bottom | 24px                |
-| 클릭          | `/main-list`로 이동 |
+| 속성          | 값             |
+| ------------- | -------------- |
+| 위치          | 좌측 상단      |
+| 크기          | medium         |
+| 색상          | primary        |
+| margin-bottom | 24px           |
+| 클릭          | `/list`로 이동 |
 
 #### Images 섹션
 
