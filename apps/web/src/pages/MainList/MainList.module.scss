@@ -3,9 +3,19 @@
 .main-list-layout {
   height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 
   padding: 8px 4px 0;
   background-color: map-get(color.$background, background-primary);
+  overflow-y: auto;
+}
+
+.sentinel {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
 }
