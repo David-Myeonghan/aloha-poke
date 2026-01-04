@@ -9,12 +9,25 @@ interface AsyncBoundaryProps {
   pendingFallback?: ComponentProps<typeof Suspense>["fallback"];
 }
 
+const CenteredLoading = (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+    }}
+  >
+    <Loading />
+  </div>
+);
+
 export default function withAsyncBoundary<
   Props extends Record<string, unknown>,
 >(
   WrappedComponent: ComponentType<Props>,
   {
-    pendingFallback = <Loading />,
+    pendingFallback = CenteredLoading,
     rejectedFallback = <ErrorPage />,
   }: AsyncBoundaryProps = {},
 ) {
