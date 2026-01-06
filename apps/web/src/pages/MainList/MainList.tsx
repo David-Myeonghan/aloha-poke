@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { usePokemonInfiniteList } from "queries/usePokemonInfiniteList";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
+import { useScrollRestoration } from "hooks/useScrollRestoration";
 import { Loading } from "@mydav/design-system";
 import { withAsyncBoundary } from "utils/HOC";
 
@@ -21,6 +22,8 @@ function MainList() {
     threshold: 0.5,
     rootMargin: "100px",
   });
+
+  useScrollRestoration("mainListScrollY");
 
   return (
     <div className={cx("main-list-layout")}>

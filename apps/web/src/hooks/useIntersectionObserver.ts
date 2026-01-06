@@ -16,7 +16,8 @@ export function useIntersectionObserver({
   const triggerRef = useRef(null);
 
   useEffect(() => {
-    if (!enabled || !triggerRef.current) return;
+    if (!enabled) return;
+    if (!triggerRef.current) return;
 
     const element = triggerRef.current; // cleanup에서 사용할 참조 저장
     const observer = new IntersectionObserver(
@@ -30,7 +31,7 @@ export function useIntersectionObserver({
 
     observer.observe(element);
 
-    return () => observer.disconnect(); // unobserve 대신 disconnect
+    return () => observer.disconnect(); // 모든 요소에 대해 observe 종료
   }, [enabled, threshold, rootMargin, onChange]);
 
   return { ref: triggerRef };

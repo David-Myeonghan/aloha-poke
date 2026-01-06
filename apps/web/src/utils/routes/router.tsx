@@ -1,5 +1,4 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import React from "react";
 import { Header } from "components";
 import { MainList, DetailPage } from "pages";
 import { ROUTES } from "constants/routers";
