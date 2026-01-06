@@ -1,32 +1,37 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 interface UseIntersectionObserverOptions {
   threshold?: number;
   rootMargin?: string;
   enabled?: boolean;
+  onChange?: () => void;
 }
 
 export function useIntersectionObserver({
-  threshold = 0.1,
-  rootMargin = "100px",
+  threshold = 0.1, // ref가 10% 보이면 트리거
+  rootMargin = "100px", // ref 도달하기 100px 전에 트리거
   enabled = true,
+  onChange,
 }: UseIntersectionObserverOptions = {}) {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const [node, setNode] = useState<Element | null>(null);
-
-  const ref = useCallback((n: Element | null) => setNode(n), []);
+  const triggerRef = useRef(null);
 
   useEffect(() => {
-    if (!enabled || !node) return;
+    if (!enabled || !triggerRef.current) return;
 
+    const element = triggerRef.current; // cleanup에서 사용할 참조 저장
     const observer = new IntersectionObserver(
-      ([entry]) => setIsIntersecting(entry.isIntersecting),
+      ([{ isIntersecting }]) => {
+        if (isIntersecting) {
+          onChange?.();
+        }
+      },
       { threshold, rootMargin },
     );
 
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [threshold, rootMargin, enabled, node]);
+    observer.observe(element);
 
-  return { ref, isIntersecting };
+    return () => observer.disconnect(); // unobserve 대신 disconnect
+  }, [enabled, threshold, rootMargin, onChange]);
+
+  return { ref: triggerRef };
 }
