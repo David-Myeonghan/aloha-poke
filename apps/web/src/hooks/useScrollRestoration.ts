@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { throttle } from "utils/throttle";
 
 export function useScrollRestoration(key: string) {
   useEffect(() => {
@@ -9,9 +10,9 @@ export function useScrollRestoration(key: string) {
     }
 
     // 저장
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       sessionStorage.setItem(key, window.scrollY.toString());
-    };
+    }, 100);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
