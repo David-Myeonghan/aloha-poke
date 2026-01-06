@@ -1,7 +1,8 @@
 import { ChangeEvent, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import { Button } from "@mydav/design-system";
+import { ROUTES } from "constants/routers";
 
 import styles from "./Header.module.scss";
 import RecentView from "./RecentView";
@@ -10,10 +11,25 @@ const cx = classNames.bind(styles);
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
 
   const handleSearchFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchValue(value);
+  };
+
+  const handleSearch = () => {
+    const trimmed = searchValue.trim().toLowerCase();
+    if (trimmed) {
+      navigate(`${ROUTES.detail.root}?name=${encodeURIComponent(trimmed)}`);
+      setSearchValue("");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
@@ -31,8 +47,10 @@ const Header = () => {
               className={cx("search-input")}
               value={searchValue}
               onChange={handleSearchFieldChange}
+              onKeyDown={handleKeyDown}
+              placeholder="Pokemon name..."
             />
-            <Button color={"error"} onClick={(e) => console.log(e)}>
+            <Button color={"error"} onClick={handleSearch}>
               Search
             </Button>
           </div>
