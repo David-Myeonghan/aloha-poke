@@ -5,6 +5,7 @@ import { usePokemonDetail } from "queries/usePokemonDetail";
 import { Button } from "@mydav/design-system";
 import { ROUTES } from "constants/routers";
 import { withAsyncBoundary, withAddRecentPokemon } from "utils/HOC";
+import NotFoundPage from "pages/NotFoundPage";
 
 import styles from "./DetailPage.module.scss";
 import PokemonImages from "./ui/PokemonImages";
@@ -12,6 +13,7 @@ import PokemonStats from "./ui/PokemonStats";
 import PokemonIntro from "./ui/PokemonIntro";
 
 const cx = classNames.bind(styles);
+
 function DetailPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -36,4 +38,6 @@ function DetailPage() {
   );
 }
 
-export default withAsyncBoundary(withAddRecentPokemon(DetailPage));
+export default withAsyncBoundary(withAddRecentPokemon(DetailPage), {
+  rejectedFallback: <NotFoundPage />,
+});

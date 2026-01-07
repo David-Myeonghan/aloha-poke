@@ -3,7 +3,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import { Button } from "@mydav/design-system";
 import { ROUTES } from "constants/routers";
-import { getPokemonDetail } from "api/pokemon";
 
 import styles from "./Header.module.scss";
 import RecentView from "./RecentView";
@@ -12,7 +11,6 @@ const cx = classNames.bind(styles);
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
   const navigate = useNavigate();
 
   const handleSearchFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,19 +18,11 @@ const Header = () => {
     setSearchValue(value);
   };
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     const trimmed = searchValue.trim().toLowerCase();
-    if (!trimmed || isSearching) return;
-
-    setIsSearching(true);
-    try {
-      await getPokemonDetail(trimmed);
+    if (trimmed) {
       navigate(`${ROUTES.detail.root}?name=${encodeURIComponent(trimmed)}`);
       setSearchValue("");
-    } catch {
-      alert(`"${trimmed}" 포켓몬을 찾을 수 없습니다.`);
-    } finally {
-      setIsSearching(false);
     }
   };
 
@@ -60,12 +50,8 @@ const Header = () => {
               onKeyDown={handleKeyDown}
               placeholder="Pokemon name..."
             />
-            <Button
-              color={"error"}
-              onClick={handleSearch}
-              disabled={isSearching}
-            >
-              {isSearching ? "..." : "Search"}
+            <Button color={"error"} onClick={handleSearch}>
+              Search
             </Button>
           </div>
         </div>

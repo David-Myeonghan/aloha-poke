@@ -4,6 +4,9 @@
 .container {
   margin: 0 auto;
   max-width: 1080px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -60,6 +63,6 @@
 }
 
 .content-wrapper {
-  //flex: 1;
-  //height: calc(100vh - 60px);
+  flex: 1;
+  overflow: auto;
 }
