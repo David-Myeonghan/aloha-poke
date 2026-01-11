@@ -1,13 +1,11 @@
 @use "styles/color.module" as color;
 
 .not-found-layout {
-  width: 100%;
-  height: calc(100vh - 60px);
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 24px;
-  background-color: map-get(color.$background, background-primary);
   color: map-get(color.$common, white);
 }

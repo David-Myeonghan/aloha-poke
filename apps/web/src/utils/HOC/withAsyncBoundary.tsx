@@ -13,10 +13,10 @@ interface AsyncBoundaryProps {
 const CenteredLoading = (
   <div
     style={{
+      flex: 1,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100vh",
     }}
   >
     <Loading />

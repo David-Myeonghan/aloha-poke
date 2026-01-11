@@ -91,4 +91,8 @@
 }
 
 .content-wrapper {
+  min-height: calc(100vh - 60px);
+  background-color: map-get(color.$background, background-primary);
+  display: flex;
+  flex-direction: column;
 }
