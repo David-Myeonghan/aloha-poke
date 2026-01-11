@@ -18,7 +18,7 @@ export default function PokemonStats({ stats }: PokemonStatsProps) {
             <Typography size={"t3"}>{stat.name}</Typography>
             <span className={cx("percentage-bar")}>
               <span
-                style={{ width: `${base_stat}%` }}
+                style={{ width: `${(base_stat / 255) * 100}%` }}
                 className={cx("progress")}
               >
                 <span>

@@ -9,17 +9,15 @@
 }
 
 .name-box {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
   h1 {
-    display: inline;
-    height: 100%;
+    text-transform: capitalize;
   }
 
   p {
-    position: absolute;
-    top: 0;
-    right: -60px;
     padding: 4px 8px;
 
     border: 1px solid map-get(color.$common, black);
@@ -37,8 +35,16 @@
   gap: 20px;
 
   div:first-of-type {
+    display: flex;
+    gap: 8px;
+
     h2 {
-      display: inline;
+      &:first-of-type::after {
+        content: "|";
+        margin-left: 8px;
+        color: map-get(color.$common, white);
+        opacity: 0.5;
+      }
     }
   }
 
@@ -47,5 +53,6 @@
     padding: 6px 16px;
     border-radius: 50%;
     background: map-get(color.$error, light);
+    text-transform: capitalize;
   }
 }

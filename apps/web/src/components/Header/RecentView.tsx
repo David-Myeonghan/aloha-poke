@@ -18,7 +18,7 @@ export default function RecentView() {
     <>
       {recentPokemonList.length ? (
         <div className={cx("container")}>
-          <Typography size={"t2"}>Recently Viewed:&nbsp;</Typography>
+          <Typography size={"t2"}>Recent View:&nbsp;</Typography>
           <span onClick={() => navigate(recentPokemonList[index].url)}>
             <Typography size={"t2"}>{recentPokemonList[index].name}</Typography>
           </span>
