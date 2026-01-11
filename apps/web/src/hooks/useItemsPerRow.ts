@@ -23,7 +23,6 @@ function calculateCardsPerRow(): number {
  */
 export function useItemsPerRow(): number {
   const [itemsPerRow, setItemsPerRow] = useState(calculateCardsPerRow);
-  console.log(itemsPerRow);
 
   useEffect(() => {
     const handleResize = debounce(() => {
