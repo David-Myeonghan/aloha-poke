@@ -12,6 +12,13 @@ const AD_TEXTS = [
   "Become a Pokemon Master",
   "Adventure awaits",
   "Gotta catch 'em all!",
+  "Your journey starts here",
+  "Explore the wild",
+  "Battle and win",
+  "Level up your team",
+  "Discover rare Pokemon",
+  "Join the adventure",
+  "Be the very best",
 ];
 
 interface AdSlotProps {
@@ -25,14 +32,14 @@ export default function AdSlot({ index }: AdSlotProps) {
   return (
     <div className={cx("ad-slot")}>
       <LazyLoadImage
-        imageSource={`https://picsum.photos/400/60?random=${index}`}
+        imageSource={`https://picsum.photos/400/120?random=${index}`}
         alt=""
         className={cx("ad-image", { loaded: isLoaded })}
         onLoad={() => setIsLoaded(true)}
       />
       {isLoaded && (
         <div className={cx("ad-overlay")}>
-          <Typography size="t3">{text}</Typography>
+          <Typography size="t2">{text}</Typography>
           <Typography size="t4">Sponsored</Typography>
         </div>
       )}

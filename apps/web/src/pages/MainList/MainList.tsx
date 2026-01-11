@@ -6,30 +6,12 @@ import { useScrollRestoration } from "hooks/useScrollRestoration";
 import { useItemsPerRow } from "hooks/useItemsPerRow";
 import { Loading } from "@mydav/design-system";
 import { withAsyncBoundary } from "utils/HOC";
-import { pokemonType } from "types/pokemon";
 
 import styles from "./MainList.module.scss";
 import PokemonList from "./ui/PokemonList";
-
-export type ListItem =
-  | { type: "pokemon"; data: pokemonType }
-  | { type: "ad"; index: number };
+import { insertAds } from "./utils";
 
 const ROWS_PER_AD = 4;
-
-function insertAds(pokemonList: pokemonType[], adInterval: number): ListItem[] {
-  const result: ListItem[] = [];
-
-  pokemonList.forEach((pokemon, i) => {
-    result.push({ type: "pokemon", data: pokemon });
-
-    if ((i + 1) % adInterval === 0) {
-      result.push({ type: "ad", index: Math.floor(i / adInterval) });
-    }
-  });
-
-  return result;
-}
 
 const cx = classNames.bind(styles);
 
