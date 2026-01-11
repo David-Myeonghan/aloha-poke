@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { throttle } from "utils/throttle";
+import { throttle } from "utils/rateLimit";
 
 export function useScrollRestoration(key: string) {
   useEffect(() => {

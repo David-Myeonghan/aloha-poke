@@ -2,22 +2,28 @@ import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import { ROUTES } from "constants/routers";
 import { LazyLoadImage, Typography } from "@mydav/design-system";
-import { pokemonType } from "types/pokemon";
+import { ListItem } from "../MainList";
 
 import styles from "./PokemonList.module.scss";
+import AdSlot from "./AdSlot";
 
 const cx = classNames.bind(styles);
 
 interface PokemonListProps {
-  pokemonList: pokemonType[] | undefined;
+  items: ListItem[];
 }
 
-export default function PokemonList({ pokemonList }: PokemonListProps) {
+export default function PokemonList({ items }: PokemonListProps) {
   const navigate = useNavigate();
 
   return (
     <div className={cx("List-layout")}>
-      {pokemonList?.map((pokemon) => {
+      {items.map((item) => {
+        if (item.type === "ad") {
+          return <AdSlot key={`ad-${item.index}`} index={item.index} />;
+        }
+
+        const pokemon = item.data;
         const pokemonId = pokemon.url.match(/(?<=\b\/)\d+/)?.["0"];
         return (
           <div
