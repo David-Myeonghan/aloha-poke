@@ -4,12 +4,13 @@
 .container {
   margin: 0 auto;
   max-width: 1080px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
   box-sizing: border-box;
   border: 1px solid black;
   height: 60px;
@@ -63,6 +64,4 @@
 }
 
 .content-wrapper {
-  flex: 1;
-  overflow: auto;
 }

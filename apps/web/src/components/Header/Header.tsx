@@ -22,7 +22,7 @@ const Header = () => {
     const trimmed = searchValue.trim().toLowerCase();
     if (trimmed) {
       navigate(`${ROUTES.detail.root}?name=${encodeURIComponent(trimmed)}`);
-      setSearchValue("");
+      // setSearchValue("");
     }
   };
 
