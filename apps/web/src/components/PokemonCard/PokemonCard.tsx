@@ -15,10 +15,15 @@ interface PokemonCardProps {
 export default function PokemonCard({ name, id }: PokemonCardProps) {
   const navigate = useNavigate();
 
+  const handleClick = () => navigate(`${ROUTES.detail.root}?name=${name}`);
+
   return (
     <div
       className={cx("card")}
-      onClick={() => navigate(`${ROUTES.detail.root}?name=${name}`)}
+      onClick={handleClick}
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
+      tabIndex={0}
+      role="button"
     >
       <LazyLoadImage
         imageSource={`https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
