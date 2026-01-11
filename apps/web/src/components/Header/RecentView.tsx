@@ -7,6 +7,7 @@ import { useRecentPokemonList } from "hooks/useRecentPokemonList";
 import styles from "./RecentView.module.scss";
 
 const cx = classNames.bind(styles);
+
 export default function RecentView() {
   const navigate = useNavigate();
 

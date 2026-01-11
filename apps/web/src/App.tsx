@@ -9,7 +9,13 @@ import IndexedDBSingleton, {
   RECENT_VIEW,
 } from "utils/IndexedDB/IndexedDBSingleton";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+    },
+  },
+});
 
 IndexedDBSingleton.openDB(RECENT_VIEW, 1, createDB).catch((err) =>
   console.log("err: ", err),

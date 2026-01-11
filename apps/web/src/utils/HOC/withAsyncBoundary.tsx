@@ -1,4 +1,5 @@
 import { ComponentProps, ComponentType, Suspense } from "react";
+import { useLocation } from "react-router-dom";
 
 import { Loading } from "@mydav/design-system";
 import { ErrorPage } from "pages/ErrorPage";
@@ -12,10 +13,10 @@ interface AsyncBoundaryProps {
 const CenteredLoading = (
   <div
     style={{
+      flex: 1,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100vh",
     }}
   >
     <Loading />
@@ -31,11 +32,19 @@ export default function withAsyncBoundary<
     rejectedFallback = <ErrorPage />,
   }: AsyncBoundaryProps = {},
 ) {
-  return (props: Props) => (
-    <ErrorBoundary fallback={rejectedFallback}>
-      <Suspense fallback={pendingFallback}>
-        <WrappedComponent {...props} />
-      </Suspense>
-    </ErrorBoundary>
-  );
+  return (props: Props) => {
+    const location = useLocation();
+
+    // 관심사 분리
+    return (
+      // 에러 UI
+      <ErrorBoundary fallback={rejectedFallback} resetKeys={[location.search]}>
+        {/* 로딩 UI */}
+        <Suspense fallback={pendingFallback}>
+          {/* 비즈니스 로직 (+ 데이터 fetching) */}
+          <WrappedComponent {...props} />
+        </Suspense>
+      </ErrorBoundary>
+    );
+  };
 }

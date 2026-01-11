@@ -1,5 +1,4 @@
 @use "styles/color.module" as color;
-@use "styles/text.module" as text;
 
 .container {
   margin: 0 auto;
@@ -7,6 +6,10 @@
 }
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
   box-sizing: border-box;
   border: 1px solid black;
   height: 60px;
@@ -53,13 +56,43 @@
   gap: 12px;
 }
 
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .search-input {
-  height: 24px;
-  padding: 8px 12px;
+  height: 32px;
+  padding: 8px 32px 8px 12px;
   border-radius: 68px;
 }
 
+.clear-button {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: map-get(color.$common, gray);
+  color: map-get(color.$common, white);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken(map-get(color.$common, gray), 10%);
+  }
+}
+
 .content-wrapper {
-  //flex: 1;
-  //height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
+  background-color: map-get(color.$background, background-primary);
+  display: flex;
+  flex-direction: column;
 }
