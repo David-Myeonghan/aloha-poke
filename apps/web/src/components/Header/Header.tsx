@@ -32,6 +32,10 @@ const Header = () => {
     }
   };
 
+  const handleClearSearch = () => {
+    setSearchValue("");
+  };
+
   return (
     <div className={cx("container")}>
       <header className={cx("header")}>
@@ -43,13 +47,25 @@ const Header = () => {
 
         <div className={cx("right-section")}>
           <div className={cx("search-box")}>
-            <input
-              className={cx("search-input")}
-              value={searchValue}
-              onChange={handleSearchFieldChange}
-              onKeyDown={handleKeyDown}
-              placeholder="Pokemon name..."
-            />
+            <div className={cx("search-input-wrapper")}>
+              <input
+                className={cx("search-input")}
+                value={searchValue}
+                onChange={handleSearchFieldChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Pokemon name..."
+              />
+              {searchValue && (
+                <button
+                  className={cx("clear-button")}
+                  onClick={handleClearSearch}
+                  type="button"
+                  aria-label="Clear search"
+                >
+                  ×
+                </button>
+              )}
+            </div>
             <Button color={"error"} onClick={handleSearch}>
               Search
             </Button>
