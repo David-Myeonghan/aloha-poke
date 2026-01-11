@@ -21,9 +21,7 @@ export default function PokemonIntro({ data }: PokemonIntroProps) {
 
       <div className={cx("character-section")}>
         <div>
-          <Typography size={"t2"}>
-            {`Height: ${data.height} cm`}&nbsp;
-          </Typography>
+          <Typography size={"t2"}>{`Height: ${data.height} cm`}</Typography>
           <Typography size={"t2"}>{`Weight: ${data.weight} kg`}</Typography>
         </div>
 
