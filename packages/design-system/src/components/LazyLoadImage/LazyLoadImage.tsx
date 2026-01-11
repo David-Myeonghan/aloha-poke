@@ -18,6 +18,8 @@ export const LazyLoadImage = ({
   alt,
   fallbackSrc,
   className,
+  onLoad,
+  onError,
   ...rest
 }: LazyLoadImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,8 +38,14 @@ export const LazyLoadImage = ({
         loading="lazy"
         className={className}
         style={{ visibility: isLoaded || hasError ? "visible" : "hidden" }}
-        onLoad={() => setIsLoaded(true)}
-        onError={() => setHasError(true)}
+        onLoad={(e) => {
+          setIsLoaded(true);
+          onLoad?.(e);
+        }}
+        onError={(e) => {
+          setHasError(true);
+          onError?.(e);
+        }}
         {...rest}
       />
     </>

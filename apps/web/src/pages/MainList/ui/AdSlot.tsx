@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames/bind";
-import { Loading, Typography } from "@mydav/design-system";
+import { LazyLoadImage, Typography } from "@mydav/design-system";
 
 import styles from "./AdSlot.module.scss";
 
@@ -24,16 +24,10 @@ export default function AdSlot({ index }: AdSlotProps) {
 
   return (
     <div className={cx("ad-slot")}>
-      {!isLoaded && (
-        <div className={cx("loading-container")}>
-          <Loading size="small" />
-        </div>
-      )}
-      <img
-        src={`https://picsum.photos/400/60?random=${index}`}
+      <LazyLoadImage
+        imageSource={`https://picsum.photos/400/60?random=${index}`}
         alt=""
         className={cx("ad-image", { loaded: isLoaded })}
-        loading="lazy"
         onLoad={() => setIsLoaded(true)}
       />
       {isLoaded && (

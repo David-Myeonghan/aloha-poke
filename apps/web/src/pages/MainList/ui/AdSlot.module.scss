@@ -9,7 +9,9 @@
   overflow: hidden;
   background: linear-gradient(90deg, #667eea 0%, #a8b4f0 50%, #667eea 100%);
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  animation: shimmer 5s infinite;
+
+  cursor: pointer;
 }
 
 @keyframes shimmer {
