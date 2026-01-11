@@ -12,11 +12,16 @@
   > * {
     opacity: 0;
     animation: fadeInUp 0.5s ease forwards;
+    transition: translate 0.2s ease;
 
     @for $i from 1 through 5 {
       &:nth-child(#{$i}) {
         animation-delay: #{$i * 0.2}s;
       }
+    }
+
+    &:hover {
+      translate: 0 -8px;
     }
   }
 }
